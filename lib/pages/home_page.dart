@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +32,47 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.more_vert),
           ),
         ],
+        bottom: TabBar(
+          indicatorColor: Colors.white,
+          indicatorWeight: 3.5,
+          controller: _tabController,
+          tabs: const [
+            Tab(
+              icon: Icon(Icons.camera_alt),
+            ),
+            Tab(
+              child: Text(
+                'CHATS',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Tab(
+              child: Text(
+                'STATUS',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Tab(
+              child: Text(
+                'CALLS',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.message),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Center(child: Text('Camera')),
+          Center(child: Text('Chats')),
+          Center(child: Text('Status')),
+          Center(child: Text('Calls')),
+        ],
       ),
     );
   }
